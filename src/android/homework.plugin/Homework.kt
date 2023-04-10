@@ -8,8 +8,17 @@ import org.json.JSONObject
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
+import org.apache.cordova.CordovaInterface
+import org.apache.cordova.CordovaWebView
 
 class Homework : CordovaPlugin() {
+
+  private var webView: CordovaWebView? = null
+
+  override fun initialize(cordova: CordovaInterface, webView: CordovaWebView) {
+    super.initialize(cordova, webView)
+    this.webView = webView
+  }
 
   override fun execute(
     action: String,
@@ -25,26 +34,16 @@ class Homework : CordovaPlugin() {
             callbackContext?.success()
             return true
         }
-        "echo" -> {
-            val msg = args?.getString(0) ?: ""
-            echo(msg, callbackContext)
+        "callJS" -> {
+            val message = "Hello from native!"
+            webView.sendJavascript("alert('$message')")
+            callbackContext?.success()
             return true
         }
         else -> return false
     }
 
     return false
-  }
-
-  private fun echo(
-    message: String,
-    callbackContext: CallbackContext
-  ) {
-    if (message.isNotEmpty()) {
-      callbackContext?.success(message);
-    } else {
-      callbackContext?.error("Expected one non-empty string argument.");
-    }
   }
 
   fun showAlert(context: Context, title: String, message: String) {
