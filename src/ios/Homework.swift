@@ -1,21 +1,23 @@
 @objc(Homework) class Homework : CDVPlugin {
-  func alert(command: CDVInvokedUrlCommand) {
+  @objc(alert:) func alert(command: CDVInvokedUrlCommand) {
     var pluginResult = CDVPluginResult(
       status: CDVCommandStatus_ERROR
     )
 
-    let msg = command.arguments[0] as? String ?? ""
+    let title = command.arguments[0] as? String ?? ""
+    let msg = command.arguments[1] as? String ?? ""
 
-    if msg.characters.count > 0 {
+    if msg.count > 0 {
       /* UIAlertController is iOS 8 or newer only. */
       let toastController: UIAlertController =
         UIAlertController(
-          title: "Custom native alert",
+            title: title,
           message: msg,
           preferredStyle: .alert
         )
+        toastController.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
 
-        self.viewController?.present(
+      self.viewController?.present(
         toastController,
         animated: true,
         completion: nil
