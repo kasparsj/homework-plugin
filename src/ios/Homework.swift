@@ -50,4 +50,10 @@
       callbackId: command.callbackId
     )
   }
+
+  @objc(callJS:) func callJS(command: CDVInvokedUrlCommand) {
+      if let vc = self.viewController as? CDVViewController, let webView = vc.webView {
+          webView.stringByEvaluatingJavaScript(from: "alert('called from native')")
+      }
+  }
 }
