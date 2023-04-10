@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        id="cordova-plugin-homework" version="1.0.0">
+
+    <name>Cordova Homework Plugin</name>
+    <description>Homework</description>
+
+    <license>MIT</license>
+
+    <engines>
+        <engine name="cordova" version=">=10.0.0"/>
+        <engine name="cordova-android" version=">=9.0.0"/>
+        <engine name="cordova-ios" version=">=6.0.0"/>
+    </engines>
+
+    <platform name="android">
+        <source-file src="src/android/homework.plugin/Homework.kt" target-dir="java/homework.plugin/"/>
+
+        <config-file target="config.xml" parent="/*">
+            <preference name="GradlePluginKotlinEnabled" value="true" />
+
+            <feature name="Homework">
+                <param name="android-package" value="homework.plugin.Homework"/>
+            </feature>
+        </config-file>
+    </platform>
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="Homework">
+                <param name="ios-package" value="Homework"/>
+            </feature>
+        </config-file>
+        <source-file src="src/ios/Homework.swift" />
+    </platform>
+</plugin>
